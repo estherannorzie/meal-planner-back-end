@@ -27,7 +27,7 @@ def create_app():
     migrate.init_app(app, db)
 
     # Register Blueprints here
-    from .routes import meal_plan_bp
+    from .meal_plan_routes import meal_plan_bp
     app.register_blueprint(meal_plan_bp)
 
     CORS(app)
