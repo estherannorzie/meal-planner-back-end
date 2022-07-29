@@ -29,6 +29,8 @@ def create_app():
     # Register Blueprints here
     from .routes.meal_plan_routes import meal_plan_bp
     app.register_blueprint(meal_plan_bp)
+    from .routes.user_routes import users_bp
+    app.register_blueprint(users_bp)
 
     CORS(app)
     return app
