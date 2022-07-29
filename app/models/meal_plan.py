@@ -6,5 +6,5 @@ class MealPlan(db.Model):
     type = db.Column(db.String, nullable=False)
     calories = db.Column(db.Integer)
     diet = db.Column(db.String)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.user_id'), nullable=False)
-    user = db.relationship("User", back_populates='meal plans')
+    user_id = db.Column(db.Integer, db.ForeignKey("user.user_id"), nullable=False)
+    user = db.relationship("User", back_populates="meal_plans")
