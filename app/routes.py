@@ -4,7 +4,7 @@ from app.models.meal_plan import MealPlan
 
 meal_plan_bp = Blueprint("meal_plans", __name__, url_prefix="/meal_plans")
 
-@meal_plan_bp.route("/</user_id/meal_plans>", methods=("POST",))
+@meal_plan_bp.route("", methods=("POST",))
 def create_meal_plan():
     request_body = request.get_json()
     meal_plan = MealPlan(title=request_body["title"],
