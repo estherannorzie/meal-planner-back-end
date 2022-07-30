@@ -22,6 +22,7 @@ def create_user_safely(cls, data_dict):
    
     for attribute in required_attributes:
         if attribute not in data_dict:
+            # multiple attributes can be missing, error message does not account for that
             create_error_message("Error, input is missing.", 400)
     
     check_if_username_email_is_present(cls, data_dict)
@@ -46,5 +47,6 @@ def create_error_message(message, status_code):
     abort(make_response(jsonify({"details": message}), status_code))
 
 
-def create_success_message(message, status_code):
-    make_response(jsonify({"details": message}), status_code)
+def create_success_message(message, status_code=200):
+    # make_response(jsonify({"details": message}), status_code)
+    return make_response(jsonify(message), status_code)
