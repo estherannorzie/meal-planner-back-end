@@ -8,9 +8,8 @@ users_bp = Blueprint("users_bp", __name__, url_prefix="/users")
 @users_bp.route("", methods=("POST",))
 def create_user():
     request_body = request.get_json()
-    create_user_safely(User, request_body)
-    
-    user = User.from_dict(request_body)
+    user = create_user_safely(User, request_body)
+
     db.session.add(user)
     db.session.commit()
     
