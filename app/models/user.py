@@ -17,3 +17,12 @@ class User(db.Model):
             last_name=self.last_name,
             email=self.email
         )
+
+    @classmethod
+    def from_dict(cls, data_dict):
+        return cls(
+            username=data_dict["username"],
+            first_name=data_dict["first_name"],
+            last_name=data_dict["last_name"],
+            email=data_dict["email"]
+        )
