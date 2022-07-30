@@ -38,3 +38,9 @@ def get_user(user_id):
     user = get_record_by_id(User, user_id)
     return create_success_message(user.to_dict(), 200)
     # return make_response(jsonify(user.to_dict()), 200)
+
+
+@users_bp.route("/<user_id>", methods=("PATCH",))
+def update_user_email(user_id):
+    user = get_record_by_id(User, user_id)
+    pass
