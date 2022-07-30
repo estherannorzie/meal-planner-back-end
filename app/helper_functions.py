@@ -1,16 +1,25 @@
-import email
 from flask import jsonify, abort, make_response
-from sqlalchemy import select
+from sqlalchemy import exists
+from app import db
 
 def create_user_safely(cls, data_dict):
-    email_exists = select(cls).where(cls.email==data_dict[email]).exists()
-    username_exists = select(cls).where(cls.username==data_dict[username]).exists()
+    username_exists = db.session.query(cls.username).filter_by(username=data_dict["username"]).first() is not None
 
-    # if the username is equal to the user's username input abort message
-    if email_exists or username_exists:
-        create_error_message("Username or email already in use.", 400)
-    else:
-        return data_dict
+    email_exists = db.session.query(cls.email).filter_by(email=data_dict["email"]).first() is not None
+
+    if username_exists and email_exists:
+        create_error_message("Username and email address already in use. Try creating an account with a different username and email.")
+
+    if username_exists:
+        create_error_message("Username already in use. Try creating an account with a different username.", 400)
+
+    if email_exists:
+        create_error_message("Email already in use. Try creating an account with a different email.", 400)
+
 
 def create_error_message(message, status_code):
-    abort(make_response(jsonify({"message": message}), status_code))
+    abort(make_response(jsonify({"details": message}), status_code))
+
+
+def create_success_message(message, status_code):
+    make_response(jsonify({"details": message}), status_code)
