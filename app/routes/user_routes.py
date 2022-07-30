@@ -30,3 +30,9 @@ def get_all_users():
     users = User.query.all()
     response_data = [user.to_dict() for user in users]
     return make_response(jsonify(response_data))
+
+
+@users_bp.route("/<user_id>", methods=("GET",))
+def get_user(user_id):
+    user = get_record_by_id(User, user_id)
+    return make_response(jsonify({"user": user.to_dict()}))
