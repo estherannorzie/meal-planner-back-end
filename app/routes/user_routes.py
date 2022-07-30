@@ -19,7 +19,6 @@ def create_user():
 @users_bp.route("/<user_id>", methods=("DELETE",))
 def delete_user(user_id):
     user = get_record_by_id(User, user_id)
-    username = user.username
     db.session.delete(user)
     db.session.commit()
     
