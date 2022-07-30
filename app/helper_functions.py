@@ -14,6 +14,9 @@ def check_if_username_email_is_present(cls, data_dict):
 
     if email_exists:
         create_error_message("Email already in use. Try creating an account with a different email.", 400)
+    
+    if "@" not in data_dict["email"]:
+        create_error_message("Invalid email entered. Please enter a valid email.", 400)
 
 
 def create_user_safely(cls, data_dict):
