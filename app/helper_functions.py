@@ -3,6 +3,10 @@ from sqlalchemy import exists
 from app import db
 
 def create_user_safely(cls, data_dict):
+    # check if required attributes exist
+    if "username" or "first_name" or "last_name" or "email" not in data_dict:
+        create_error_message("Error, input is missing.", 400)
+
     username_exists = db.session.query(cls.username).filter_by(username=data_dict["username"]).first() is not None
 
     email_exists = db.session.query(cls.email).filter_by(email=data_dict["email"]).first() is not None
@@ -15,6 +19,8 @@ def create_user_safely(cls, data_dict):
 
     if email_exists:
         create_error_message("Email already in use. Try creating an account with a different email.", 400)
+
+    return cls.from_dict(data_dict)
 
 
 def create_error_message(message, status_code):
