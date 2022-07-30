@@ -1,5 +1,4 @@
 from flask import jsonify, abort, make_response
-from sqlalchemy import exists
 from app import db
 
 def create_user_safely(cls, data_dict):
@@ -21,6 +20,18 @@ def create_user_safely(cls, data_dict):
         create_error_message("Email already in use. Try creating an account with a different email.", 400)
 
     return cls.from_dict(data_dict)
+
+def get_record_by_id(cls, id):
+    try:
+        id = int(id)
+    except ValueError:
+        create_error_message(f"User id: {id} is not a valid id.", 400)
+    record = cls.query.get(id)
+
+    if record:
+        return record
+    else:
+        create_error_message(f"User id: {id} does not exist.", 404)
 
 
 def create_error_message(message, status_code):
