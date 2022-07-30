@@ -13,6 +13,7 @@ class User(db.Model):
         return dict(
             id=self.user_id,
             username=self.username,
+            first_name=self.first_name,
             last_name=self.last_name,
             email=self.email
         )
