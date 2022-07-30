@@ -1,8 +1,8 @@
 from flask import jsonify, abort, make_response
 from app import db
 
-def verify_username_presence(cls, data_dict):
-    username_exists = db.session.query(cls.username).filter_by(username=data_dict["username"]).first() is not None
+def verify_username_presence(cls, username):
+    username_exists = db.session.query(cls.username).filter_by(username=username).first() is not None
 
     if username_exists:
         create_error_message("Username already in use. Try creating an account with a different username.", 400)
@@ -10,13 +10,13 @@ def verify_username_presence(cls, data_dict):
     return True
 
 
-def verify_email_presence(cls, data_dict):
-    email_exists = db.session.query(cls.email).filter_by(email=data_dict["email"]).first() is not None
+def verify_email_presence(cls, email):
+    email_exists = db.session.query(cls.email).filter_by(email=email).first() is not None
 
     if email_exists:
         create_error_message("Email already in use. Try creating an account with a different email.", 400)
 
-    if "@" not in data_dict["email"]:
+    if "@" not in email:
         create_error_message("Invalid email entered. Please enter a valid email.", 400)
 
     return True
@@ -32,13 +32,12 @@ def create_user_safely(cls, data_dict):
             create_error_message("Error, input is missing.", 400)
     
     # CHECK THAT USERNAME AND EMAIL NOT ALREADY IN DB
-    username_exists = verify_username_presence(cls, data_dict)
-    email_exists = verify_email_presence(cls, data_dict)
+    username_available = verify_username_presence(cls, data_dict["username"])
+    email_available = verify_email_presence(cls, data_dict["email"])
 
-    if username_exists and email_exists:
-        create_error_message("Username and email address already in use. Try creating an account with a different username and email.", 400)
-
-    return cls.from_dict(data_dict)
+    # Create the user if the username and email is does not exist already
+    if username_available and email_available:
+        return cls.from_dict(data_dict)
 
 
 def get_record_by_id(cls, id):
