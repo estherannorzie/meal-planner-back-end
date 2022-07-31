@@ -66,20 +66,20 @@ def verify_meal_plan_presence(cls, title):
 
 
 def create_meal_plan_safely(cls, data_dict):
-    required_attributes = {"title", "type", "calories", "diet"}
+    optional_attributes = {"calories", "diet"}
 
-    if len(data_dict) > len(required_attributes):
-        create_error_message("Too many properties submitted.", 400)
-    
-    for attribute in required_attributes:
-        if attribute not in data_dict:
-            create_error_message(f"Error, {attribute} is missing.", 400)
+    if "title" not in data_dict or "type" not in data_dict:
+        create_error_message("Missing required attribute(s).", 400)
+
+    for key in data_dict:
+        if key not in optional_attributes:
+            create_error_message("An incorrect attribute was submitted.", 400)
     
     # check that the meal plan is not present for user
     verify_meal_plan_presence(cls, data_dict["title"])
 
     # Create the meal plan for the user
-    pass
+    # pass
 
 def create_error_message(message, status_code):
     abort(make_response(jsonify({"details": message}), status_code))
