@@ -3,7 +3,7 @@ from app import db
 from app.models.user import User
 from app.helper_functions import create_error_message, create_user_safely, get_record_by_id, create_success_message, verify_email_presence, validate_email_update_request
 
-users_bp = Blueprint("users_bp", __name__, url_prefix="/users")
+users_bp = Blueprint("users", __name__, url_prefix="/users")
 
 @users_bp.route("", methods=("POST",))
 def create_user():
