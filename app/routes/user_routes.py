@@ -1,7 +1,7 @@
 from flask import Blueprint, request, jsonify, make_response
 from app import db
 from app.models.user import User
-from app.helper_functions import create_user_safely, get_record_by_id, create_success_message
+from app.helper_functions import create_user_safely, get_record_by_id, create_success_message, verify_email_presence
 
 users_bp = Blueprint("users_bp", __name__, url_prefix="/users")
 
@@ -19,6 +19,7 @@ def create_user():
 @users_bp.route("/<user_id>", methods=("DELETE",))
 def delete_user(user_id):
     user = get_record_by_id(User, user_id)
+
     db.session.delete(user)
     db.session.commit()
     
@@ -29,18 +30,23 @@ def delete_user(user_id):
 def get_all_users():
     users = User.query.all()
     response_data = [user.to_dict() for user in users]
+
     return create_success_message(response_data, 200)
-    # return make_response(jsonify(response_data))
 
 
 @users_bp.route("/<user_id>", methods=("GET",))
 def get_user(user_id):
     user = get_record_by_id(User, user_id)
     return create_success_message(user.to_dict(), 200)
-    # return make_response(jsonify(user.to_dict()), 200)
 
 
 @users_bp.route("/<user_id>", methods=("PATCH",))
 def update_user_email(user_id):
     user = get_record_by_id(User, user_id)
-    pass
+    request_body = request.get_json()
+    verify_email_presence(User, request_body["email"])
+
+    user.update_email(request_body)
+    db.session.commit()
+
+    return create_success_message(f"User {user.username} email updated to {user.email}", 200)
