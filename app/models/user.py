@@ -26,3 +26,6 @@ class User(db.Model):
             last_name=data_dict["last_name"],
             email=data_dict["email"]
         )
+    
+    def update_email(self, data_dict):
+        self.email = data_dict["email"]
