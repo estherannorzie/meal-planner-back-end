@@ -21,6 +21,9 @@ def verify_email_presence(cls, email):
 def create_user_safely(cls, data_dict):
     # check if required attributes exist
     required_attributes = {"username", "first_name", "last_name", "email"}
+
+    if len(data_dict) > len(required_attributes):
+        create_error_message("Too many properties were input.", 400)
    
     for attribute in required_attributes:
         if attribute not in data_dict:
