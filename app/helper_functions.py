@@ -7,6 +7,13 @@ def verify_username_presence(cls, username):
     if username_unavailable:
         create_error_message("Username already in use. Try creating an account with a different username.", 400)
 
+def validate_email_update_request(data_dict):
+    if len(data_dict) > 1:
+        create_error_message("Too many properties submitted. Try again.", 400)
+
+    if "email" not in data_dict:
+        create_error_message("Email not in request. Try again.", 400)
+
 
 def verify_email_presence(cls, email):
     email_unavailable = db.session.query(cls.email).filter_by(email=email).first() is not None
@@ -23,12 +30,12 @@ def create_user_safely(cls, data_dict):
     required_attributes = {"username", "first_name", "last_name", "email"}
 
     if len(data_dict) > len(required_attributes):
-        create_error_message("Too many properties were input.", 400)
+        create_error_message("Too many properties submitted. Try again.", 400)
    
     for attribute in required_attributes:
         if attribute not in data_dict:
             # multiple attributes can be missing, error message does not account for that
-            create_error_message("Error, input is missing.", 400)
+            create_error_message(f"Error, {attribute} is missing.", 400)
     
     # CHECK THAT USERNAME AND EMAIL NOT ALREADY IN DB
     verify_username_presence(cls, data_dict["username"])
@@ -42,22 +49,37 @@ def get_record_by_id(cls, id):
     try:
         id = int(id)
     except ValueError:
-        create_error_message(f"User id: {id} is not a valid id.", 400)
+        create_error_message(f"User ID: {id} is not a valid ID.", 400)
     record = cls.query.get(id)
 
     if record:
         return record
     else:
-        create_error_message(f"User id: {id} does not exist.", 404)
+        create_error_message(f"User ID: {id} does not exist.", 404)
 
 
-def validate_email_update_request(data_dict):
-    if len(data_dict) > 1:
-        create_error_message("Too many properties submitted. Try again.", 400)
+def verify_meal_plan_presence(cls, title):
+    meal_plan_unavailable = db.session.query(cls.title).filter_by(email=title).first() is not None
 
-    if "email" not in data_dict:
-        create_error_message("Email not in request. Try again.", 400)
+    if meal_plan_unavailable:
+        create_error_message("You have already added this meal plan.", 400)
 
+
+def create_meal_plan_safely(cls, data_dict):
+    required_attributes = {"title", "type", "calories", "diet"}
+
+    if len(data_dict) > len(required_attributes):
+        create_error_message("Too many properties submitted.", 400)
+    
+    for attribute in required_attributes:
+        if attribute not in data_dict:
+            create_error_message(f"Error, {attribute} is missing.", 400)
+    
+    # check that the meal plan is not present for user
+    verify_meal_plan_presence(cls, data_dict["title"])
+
+    # Create the meal plan for the user
+    pass
 
 def create_error_message(message, status_code):
     abort(make_response(jsonify({"details": message}), status_code))
