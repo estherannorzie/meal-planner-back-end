@@ -12,7 +12,7 @@ def verify_email_presence(cls, email):
     email_unavailable = db.session.query(cls.email).filter_by(email=email).first() is not None
 
     if email_unavailable:
-        create_error_message("Email already in use. Try creating an account with a different email.", 400)
+        create_error_message("Email already in use. Try using a different email.", 400)
 
     if "@" not in email:
         create_error_message("Invalid email entered. Please enter a valid email.", 400)
