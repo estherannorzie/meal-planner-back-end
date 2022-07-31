@@ -48,6 +48,14 @@ def get_record_by_id(cls, id):
         create_error_message(f"User id: {id} does not exist.", 404)
 
 
+def validate_email_update_request(data_dict):
+    if len(data_dict) > 1:
+        create_error_message("Too many properties submitted. Try again.", 400)
+
+    if "email" not in data_dict:
+        create_error_message("Email not in request. Try again.", 400)
+
+
 def create_error_message(message, status_code):
     abort(make_response(jsonify({"details": message}), status_code))
 
