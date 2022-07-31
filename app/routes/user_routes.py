@@ -1,7 +1,8 @@
 from flask import Blueprint, request, jsonify, make_response
 from app import db
 from app.models.user import User
-from app.helper_functions import create_error_message, create_user_safely, get_record_by_id, create_success_message, verify_email_presence, validate_email_update_request
+from app.models.meal_plan import MealPlan
+from app.helper_functions import create_user_safely, get_record_by_id, create_success_message, verify_email_presence, validate_email_update_request, create_meal_plan_safely
 
 users_bp = Blueprint("users", __name__, url_prefix="/users")
 
@@ -52,3 +53,15 @@ def update_user_email(user_id):
     db.session.commit()
 
     return create_success_message(f"User {user.username} email updated to {user.email}", 200)
+
+
+@users_bp.route("/<user_id>/meal_plans", methods=("POST",))
+def add_meal_plan_to_user(user_id):
+    user = get_record_by_id(User, user_id)
+
+    request_body = request.get_json()
+    meal_plan = create_meal_plan_safely(MealPlan, request_body)
+
+    db.session.commit(meal_plan)
+
+    return create_success_message(f"{meal_plan.title} meal plan for user {user.username} successfully created.", 201)
