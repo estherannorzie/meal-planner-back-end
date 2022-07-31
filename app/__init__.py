@@ -27,8 +27,8 @@ def create_app():
     migrate.init_app(app, db)
 
     # Register Blueprints here
-    from .routes.meal_plan_routes import meal_plan_bp
-    app.register_blueprint(meal_plan_bp)
+    from .routes.meal_plan_routes import meal_plans_bp
+    app.register_blueprint(meal_plans_bp)
     from .routes.user_routes import users_bp
     app.register_blueprint(users_bp)
 
