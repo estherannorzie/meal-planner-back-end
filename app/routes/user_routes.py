@@ -1,7 +1,7 @@
 from flask import Blueprint, request, jsonify, make_response
 from app import db
 from app.models.user import User
-from app.helper_functions import create_user_safely, get_record_by_id, create_success_message, verify_email_presence
+from app.helper_functions import create_error_message, create_user_safely, get_record_by_id, create_success_message, verify_email_presence, validate_email_update_request
 
 users_bp = Blueprint("users_bp", __name__, url_prefix="/users")
 
@@ -44,6 +44,8 @@ def get_user(user_id):
 def update_user_email(user_id):
     user = get_record_by_id(User, user_id)
     request_body = request.get_json()
+
+    validate_email_update_request(request_body)
     verify_email_presence(User, request_body["email"])
 
     user.update_email(request_body)
