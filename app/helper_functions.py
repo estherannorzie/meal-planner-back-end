@@ -59,27 +59,31 @@ def get_record_by_id(cls, id):
 
 
 def verify_meal_plan_presence(cls, title):
-    meal_plan_unavailable = db.session.query(cls.title).filter_by(email=title).first() is not None
+    meal_plan_unavailable = db.session.query(cls.title).filter_by(title=title).first() is not None
 
     if meal_plan_unavailable:
         create_error_message("You have already added this meal plan.", 400)
 
 
 def create_meal_plan_safely(cls, data_dict):
-    optional_attributes = {"calories", "diet"}
-
     if "title" not in data_dict or "type" not in data_dict:
         create_error_message("Missing required attribute(s).", 400)
 
-    for key in data_dict:
-        if key not in optional_attributes:
-            create_error_message("An incorrect attribute was submitted.", 400)
+    # now we can assume the required attributes exist...
+    # if a key is not calories or diet abort
+
+    possible_attributes = {"title", "type", "calories", "diet"}
+    submitted_attributes = set(data_dict.keys())
+
+    if not submitted_attributes.issubset(possible_attributes):
+        create_error_message("Incorrect attribute submitted. Try again.", 400)
     
     # check that the meal plan is not present for user
     verify_meal_plan_presence(cls, data_dict["title"])
 
     # Create the meal plan for the user
-    # pass
+    return cls.from_dict(data_dict)
+
 
 def create_error_message(message, status_code):
     abort(make_response(jsonify({"details": message}), status_code))
