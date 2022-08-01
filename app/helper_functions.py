@@ -49,13 +49,13 @@ def get_record_by_id(cls, id):
     try:
         id = int(id)
     except ValueError:
-        create_error_message(f"User ID: {id} is not a valid ID.", 400)
+        create_error_message(f"{cls} ID: {id} is not a valid ID.", 400)
     record = cls.query.get(id)
 
-    if record:
-        return record
-    else:
-        create_error_message(f"User ID: {id} does not exist.", 404)
+    if not record:
+        create_error_message(f"{cls} ID: {id} does not exist.", 404)
+
+    return record 
 
 
 def verify_meal_plan_presence(cls, title):
