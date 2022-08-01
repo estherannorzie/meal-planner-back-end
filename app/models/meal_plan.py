@@ -10,14 +10,24 @@ class MealPlan(db.Model):
     user = db.relationship("User", back_populates="meal_plans")
 
 
+    def to_dict(self):
+        return dict(
+            id=self.meal_plan_id,
+            title=self.title,
+            type=self.type,
+            calories=self.calories,
+        )
+
+
     @classmethod
-    def from_dict(cls, data_dict):
+    def from_dict(cls, data_dict, user):
         try:
             return cls(
                 title=data_dict["title"],
                 type=data_dict["type"],
                 calories=data_dict["calories"],
-                diet=data_dict["diet"]
+                diet=data_dict["diet"],
+                user=user
             )
         except KeyError:
             return cls(
