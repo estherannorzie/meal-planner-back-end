@@ -65,7 +65,7 @@ def verify_meal_plan_presence(cls, title):
         create_error_message("You have already added this meal plan.", 400)
 
 
-def create_meal_plan_safely(cls, data_dict):
+def create_meal_plan_safely(cls, data_dict, user):
     if "title" not in data_dict or "type" not in data_dict:
         create_error_message("Missing required attribute(s).", 400)
 
@@ -82,7 +82,7 @@ def create_meal_plan_safely(cls, data_dict):
     verify_meal_plan_presence(cls, data_dict["title"])
 
     # Create the meal plan for the user
-    return cls.from_dict(data_dict)
+    return cls.from_dict(data_dict, user)
 
 
 def create_error_message(message, status_code):
