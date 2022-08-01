@@ -10,6 +10,10 @@ class MealPlan(db.Model):
     user = db.relationship("User", back_populates="meal_plans")
 
 
+    @staticmethod
+    def stringify():
+        return "Meal plan"
+    
     def to_dict(self):
         return dict(
             id=self.meal_plan_id,

@@ -9,6 +9,10 @@ class User(db.Model):
     meal_plans = db.relationship("MealPlan", back_populates="user")
 
 
+    @staticmethod
+    def stringify():
+        return "User"
+
     def to_dict(self):
         return dict(
             id=self.user_id,
