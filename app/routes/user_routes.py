@@ -76,3 +76,14 @@ def get_all_user_meal_plans(user_id):
     response_data = [meal_plan.to_dict() for meal_plan in user_meal_plans]
 
     return create_success_message(response_data, 200)
+
+
+@users_bp.route("/<user_id>/meal_plans/<meal_plan_id>", methods=("DELETE",))
+def delete_user_meal_plan(user_id, meal_plan_id):
+    user = get_record_by_id(User, user_id)
+    meal_plan = get_record_by_id(MealPlan, meal_plan_id)
+
+    db.session.delete(meal_plan)
+    db.session.commit()
+    
+    return make_response(f"User {user.username}'s meal plan {meal_plan.title} successfully deleted.")
