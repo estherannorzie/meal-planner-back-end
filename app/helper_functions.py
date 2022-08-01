@@ -69,6 +69,9 @@ def create_meal_plan_safely(cls, data_dict, user):
     if "title" not in data_dict or "type" not in data_dict:
         create_error_message("Missing required attribute(s).", 400)
 
+    # check that the meal plan is not present for user
+    verify_meal_plan_presence(cls, data_dict["title"])
+    
     # now we can assume the required attributes exist...
     # if a key is not calories or diet abort
 
@@ -77,9 +80,6 @@ def create_meal_plan_safely(cls, data_dict, user):
 
     if not submitted_attributes.issubset(possible_attributes):
         create_error_message("Incorrect attribute submitted. Try again.", 400)
-    
-    # check that the meal plan is not present for user
-    verify_meal_plan_presence(cls, data_dict["title"])
 
     # Create the meal plan for the user
     return cls.from_dict(data_dict, user)
