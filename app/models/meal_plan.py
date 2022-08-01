@@ -16,21 +16,16 @@ class MealPlan(db.Model):
             title=self.title,
             type=self.type,
             calories=self.calories,
+            diet=self.diet
         )
 
 
     @classmethod
     def from_dict(cls, data_dict, user):
-        try:
-            return cls(
-                title=data_dict["title"],
-                type=data_dict["type"],
-                calories=data_dict["calories"],
-                diet=data_dict["diet"],
-                user=user
-            )
-        except KeyError:
-            return cls(
-                title=data_dict["title"],
-                type=data_dict["type"]
-            )
+        return cls(
+            title=data_dict.get("title"),
+            type=data_dict.get("type"),
+            calories=data_dict.get("calories"),
+            diet=data_dict.get("diet"),
+            user=user
+        )
