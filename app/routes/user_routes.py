@@ -60,8 +60,19 @@ def add_meal_plan_to_user(user_id):
     user = get_record_by_id(User, user_id)
 
     request_body = request.get_json()
-    meal_plan = create_meal_plan_safely(MealPlan, request_body)
+    meal_plan = create_meal_plan_safely(MealPlan, request_body, user)
 
-    db.session.commit(meal_plan)
+    db.session.add(meal_plan)
+    db.session.commit()
 
     return create_success_message(f"{meal_plan.title} meal plan for user {user.username} successfully created.", 201)
+
+
+@users_bp.route("/<user_id>/meal_plans", methods=("GET",))
+def get_all_user_meal_plans(user_id):
+    get_record_by_id(User, user_id)
+    user_meal_plans = MealPlan.query.all()
+
+    response_data = [meal_plan.to_dict() for meal_plan in user_meal_plans]
+
+    return create_success_message(response_data, 200)
