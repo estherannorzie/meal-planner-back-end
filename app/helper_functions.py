@@ -7,6 +7,7 @@ def verify_username_presence(cls, username):
     if username_unavailable:
         create_error_message("Username already in use. Try creating an account with a different username.", 400)
 
+
 def validate_email_update_request(data_dict):
     if len(data_dict) > 1:
         create_error_message("Too many properties submitted. Try again.", 400)
@@ -83,6 +84,19 @@ def create_meal_plan_safely(cls, data_dict, user):
 
     # Create the meal plan for the user
     return cls.from_dict(data_dict, user)
+
+
+def update_user_meal_plan_safely(cls, data_dict, meal_plan):
+    if "title" not in data_dict or "type" not in data_dict:
+        create_error_message("Missing required attribute(s).", 400)
+
+    possible_attributes = {"title", "type", "calories", "diet"}
+    submitted_attributes = set(data_dict.keys())
+
+    if not submitted_attributes.issubset(possible_attributes):
+        create_error_message("Incorrect attribute submitted. Try again.", 400)
+
+    return cls.update_meal_plan(meal_plan, data_dict)
 
 
 def create_error_message(message, status_code):
