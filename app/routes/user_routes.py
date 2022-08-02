@@ -2,7 +2,7 @@ from flask import Blueprint, request, jsonify, make_response
 from app import db
 from app.models.user import User
 from app.models.meal_plan import MealPlan
-from app.helper_functions import create_user_safely, get_record_by_id, create_success_message, verify_email_presence, validate_email_update_request, create_meal_plan_safely, update_user_meal_plan_safely
+from app.helper_functions import get_record_by_id, create_user_safely, create_user_meal_plan_safely, update_user_meal_plan_safely, verify_email_presence, validate_email_update_request, create_success_message
 
 users_bp = Blueprint("users", __name__, url_prefix="/users")
 
@@ -24,7 +24,7 @@ def delete_user(user_id):
     db.session.delete(user)
     db.session.commit()
     
-    return make_response(f"User {user.username} with id of {user_id} successfully deleted", 200)
+    return make_response(f"User {user.username} with id of {user_id} successfully deleted")
 
 
 @users_bp.route("", methods=("GET",))
@@ -32,13 +32,13 @@ def get_all_users():
     users = User.query.all()
     response_data = [user.to_dict() for user in users]
 
-    return create_success_message(response_data, 200)
+    return create_success_message(response_data)
 
 
 @users_bp.route("/<user_id>", methods=("GET",))
 def get_user(user_id):
     user = get_record_by_id(User, user_id)
-    return create_success_message(user.to_dict(), 200)
+    return create_success_message(user.to_dict())
 
 
 @users_bp.route("/<user_id>", methods=("PATCH",))
@@ -52,7 +52,7 @@ def update_user_email(user_id):
     user.update_email(request_body)
     db.session.commit()
 
-    return create_success_message(f"User {user.username} email updated to {user.email}", 200)
+    return create_success_message(f"User {user.username} email updated to {user.email}")
 
 
 @users_bp.route("/<user_id>/meal_plans", methods=("POST",))
@@ -60,7 +60,7 @@ def add_meal_plan_to_user(user_id):
     user = get_record_by_id(User, user_id)
 
     request_body = request.get_json()
-    meal_plan = create_meal_plan_safely(MealPlan, request_body, user)
+    meal_plan = create_user_meal_plan_safely(MealPlan, request_body, user)
 
     db.session.add(meal_plan)
     db.session.commit()
@@ -75,7 +75,7 @@ def get_all_user_meal_plans(user_id):
 
     response_data = [meal_plan.to_dict() for meal_plan in user_meal_plans]
 
-    return create_success_message(response_data, 200)
+    return create_success_message(response_data)
 
 
 @users_bp.route("/<user_id>/meal_plans/<meal_plan_id>", methods=("DELETE",))
