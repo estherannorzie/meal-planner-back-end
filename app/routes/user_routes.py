@@ -2,7 +2,7 @@ from flask import Blueprint, request, jsonify, make_response
 from app import db
 from app.models.user import User
 from app.models.meal_plan import MealPlan
-from app.helper_functions import create_user_safely, get_record_by_id, create_success_message, verify_email_presence, validate_email_update_request, create_meal_plan_safely
+from app.helper_functions import create_user_safely, get_record_by_id, create_success_message, verify_email_presence, validate_email_update_request, create_meal_plan_safely, update_user_meal_plan_safely
 
 users_bp = Blueprint("users", __name__, url_prefix="/users")
 
@@ -87,3 +87,16 @@ def delete_user_meal_plan(user_id, meal_plan_id):
     db.session.commit()
     
     return make_response(f"User {user.username}'s meal plan {meal_plan.title} successfully deleted.")
+
+
+@users_bp.route("/<user_id>/meal_plans/<meal_plan_id>", methods=("PUT",))
+def update_user_meal_plan(user_id, meal_plan_id):
+    user = get_record_by_id(User, user_id)
+    meal_plan = get_record_by_id(MealPlan, meal_plan_id)
+
+    request_body = request.get_json()
+    update_user_meal_plan_safely(MealPlan, request_body, meal_plan)
+    
+    db.session.commit()
+    
+    return make_response(f"User {user.username}'s meal plan updated to {meal_plan.title} successfully.")
