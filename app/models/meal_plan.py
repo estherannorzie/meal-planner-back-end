@@ -2,7 +2,7 @@ from app import db
 
 class MealPlan(db.Model):
     meal_plan_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    title = db.Column(db.String, nullable=False)
+    title = db.Column(db.String(64), nullable=False)
     type = db.Column(db.Integer, nullable=False)
     calories = db.Column(db.Integer)
     diet = db.Column(db.Integer)
