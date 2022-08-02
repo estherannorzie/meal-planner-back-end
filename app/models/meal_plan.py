@@ -14,22 +14,30 @@ class MealPlan(db.Model):
     def stringify():
         return "Meal plan"
     
+    
     def to_dict(self):
         return dict(
             id=self.meal_plan_id,
             title=self.title,
             type=self.type,
             calories=self.calories,
-            diet=self.diet
+            diet=self.diet,
         )
 
 
     @classmethod
     def from_dict(cls, data_dict, user):
         return cls(
-            title=data_dict.get("title"),
-            type=data_dict.get("type"),
+            title=data_dict["title"],
+            type=data_dict["type"],
             calories=data_dict.get("calories"),
             diet=data_dict.get("diet"),
             user=user
         )
+
+
+def update_meal_plan(self, data_dict):
+        self.title=data_dict["title"],
+        self.type=data_dict["type"],
+        self.calories=data_dict.get("calories"),
+        self.diet=data_dict.get("diet"),
