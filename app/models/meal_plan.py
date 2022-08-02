@@ -36,7 +36,7 @@ class MealPlan(db.Model):
         )
 
 
-def update_meal_plan(self, data_dict):
+    def update_meal_plan(self, data_dict):
         self.title=data_dict["title"],
         self.type=data_dict["type"],
         self.calories=data_dict.get("calories"),
