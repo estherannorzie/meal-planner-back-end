@@ -80,7 +80,7 @@ def validate_email_update_request(data_dict):
 
 
 def is_subset(submitted_attributes):
-    possible_attributes = {"title", "type", "calories", "diet"},
+    possible_attributes = {"title", "type", "calories", "diet"}
 
     if not submitted_attributes.issubset(possible_attributes):
         create_error_message("Incorrect attribute(s) submitted. Try again.")
