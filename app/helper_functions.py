@@ -1,5 +1,4 @@
 from flask import jsonify, abort, make_response
-from app import db
 
 def get_record_by_id(cls, id):
     try:
@@ -46,16 +45,21 @@ def update_user_meal_plan_safely(cls, data_dict, meal_plan):
 
     return cls.update_meal_plan(meal_plan, data_dict)
 
+# possible helper function for filtering db
+def filter_column(cls, column, record):
+    # return cls.query.filter_by(column=record).first()
+    pass
+
 
 def verify_username_presence(cls, username):
-    username_unavailable = db.session.query(cls.username).filter_by(username=username).first() is not None
-
+    username_unavailable = cls.query.filter_by(username=username).first()
+    
     if username_unavailable:
         create_error_message("Username already in use. Try creating an account with a different username.")
 
 
 def verify_email_presence(cls, email):
-    email_unavailable = db.session.query(cls.email).filter_by(email=email).first() is not None
+    email_unavailable = cls.query.filter_by(email=email).first()
 
     if email_unavailable:
         create_error_message("Email already in use. Try using a different email.")
@@ -65,7 +69,7 @@ def verify_email_presence(cls, email):
 
 
 def verify_meal_plan_presence(cls, title):
-    meal_plan_present = db.session.query(cls.title).filter_by(title=title).first() is not None
+    meal_plan_present = cls.query.filter_by(title=title).first()
 
     if meal_plan_present:
         create_error_message("You have already added this meal plan.")
@@ -89,7 +93,7 @@ def is_subset(submitted_attributes):
 def check_for_title_and_type(data_dict):
     if "title" not in data_dict:
         create_error_message("Missing title.")
-        
+
     if "type" not in data_dict:
         create_error_message("Missing type.")
 
