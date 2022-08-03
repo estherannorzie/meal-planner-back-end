@@ -65,9 +65,9 @@ def verify_email_presence(cls, email):
 
 
 def verify_meal_plan_presence(cls, title):
-    meal_plan_unavailable = db.session.query(cls.title).filter_by(title=title).first() is not None
+    meal_plan_present = db.session.query(cls.title).filter_by(title=title).first() is not None
 
-    if meal_plan_unavailable:
+    if meal_plan_present:
         create_error_message("You have already added this meal plan.")
 
 
@@ -83,12 +83,14 @@ def is_subset(submitted_attributes):
     possible_attributes = {"title", "type", "calories", "diet"},
 
     if not submitted_attributes.issubset(possible_attributes):
-        create_error_message("Incorrect attribute submitted. Try again.")
+        create_error_message("Incorrect attribute(s) submitted. Try again.")
 
 
 def check_for_title_and_type(data_dict):
     if "title" not in data_dict or "type" not in data_dict:
-        create_error_message("Missing required attribute(s).")
+        create_error_message("Missing title.")
+    if "type" not in data_dict:
+        create_error_message("Missing type.")
 
 
 def create_error_message(message, status_code=400):
