@@ -87,8 +87,9 @@ def is_subset(submitted_attributes):
 
 
 def check_for_title_and_type(data_dict):
-    if "title" not in data_dict or "type" not in data_dict:
+    if "title" not in data_dict:
         create_error_message("Missing title.")
+        
     if "type" not in data_dict:
         create_error_message("Missing type.")
 
