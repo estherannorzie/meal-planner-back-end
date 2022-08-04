@@ -1,4 +1,5 @@
 from flask import jsonify, abort, make_response
+import datetime
 
 def get_record_by_id(cls, id):
     try:
@@ -36,6 +37,11 @@ def create_user_meal_plan_safely(cls, data_dict, user):
     verify_title_and_type(data_dict)
     
     is_subset(submitted_attributes=set(data_dict.keys()))
+
+    date_object = datetime.datetime.strptime(data_dict["date"], "%d %B, %Y")
+
+    if date_object.date() < datetime.date.today():
+        create_error_message("Meal plans cannot be created in the past.")
 
     return cls.from_dict(data_dict, user)
 
