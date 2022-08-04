@@ -2,11 +2,11 @@ from app import db
 
 class MealPlan(db.Model):
     meal_plan_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    title = db.Column(db.String(64), nullable=False)
+    title = db.Column(db.String(64), nullable=False, unique=True)
     type = db.Column(db.Integer, nullable=False)
     calories = db.Column(db.Integer)
     diet = db.Column(db.Integer)
-    date = db.Column(db.DateTime)
+    date = db.Column(db.DateTime(timezone=True))
     user_id = db.Column(db.Integer, db.ForeignKey("user.user_id"), nullable=False)
     user = db.relationship("User", back_populates="meal_plans")
 
@@ -23,6 +23,7 @@ class MealPlan(db.Model):
             type=self.type,
             calories=self.calories,
             diet=self.diet,
+            date=self.date
         )
 
 
@@ -33,6 +34,7 @@ class MealPlan(db.Model):
             type=data_dict["type"],
             calories=data_dict.get("calories"),
             diet=data_dict.get("diet"),
+            date=data_dict.get("date"),
             user=user
         )
 
