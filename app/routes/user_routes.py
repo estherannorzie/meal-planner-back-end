@@ -2,7 +2,7 @@ from flask import Blueprint, request, jsonify, make_response
 from app import db
 from app.models.user import User
 from app.models.meal_plan import MealPlan
-from app.helper_functions import get_record_by_id, create_user_safely, create_user_meal_plan_safely, update_user_meal_plan_safely, verify_email_presence, validate_email_update_request, create_success_message
+from app.helper_functions import get_record_by_id, create_user_safely, create_user_meal_plan_safely, update_user_meal_plan_safely, validate_email_update_request, create_success_message
 
 users_bp = Blueprint("users", __name__, url_prefix="/users")
 
@@ -47,8 +47,6 @@ def update_user_email(user_id):
     request_body = request.get_json()
 
     validate_email_update_request(request_body)
-    verify_email_presence(User, request_body["email"])
-
     user.update_email(request_body)
     db.session.commit()
 
