@@ -1,8 +1,8 @@
-"""Reconstruct meal plan attributes
+"""Initial commit
 
-Revision ID: 8c079b1914b0
+Revision ID: 9d269c9153c1
 Revises: 
-Create Date: 2022-08-03 14:32:57.419422
+Create Date: 2022-08-04 03:40:10.896531
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '8c079b1914b0'
+revision = '9d269c9153c1'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -24,7 +24,9 @@ def upgrade():
     sa.Column('first_name', sa.String(length=16), nullable=False),
     sa.Column('last_name', sa.String(length=16), nullable=False),
     sa.Column('email', sa.String(length=255), nullable=False),
-    sa.PrimaryKeyConstraint('user_id')
+    sa.PrimaryKeyConstraint('user_id'),
+    sa.UniqueConstraint('email'),
+    sa.UniqueConstraint('username')
     )
     op.create_table('meal_plan',
     sa.Column('meal_plan_id', sa.Integer(), autoincrement=True, nullable=False),
@@ -32,7 +34,7 @@ def upgrade():
     sa.Column('type', sa.Integer(), nullable=False),
     sa.Column('calories', sa.Integer(), nullable=True),
     sa.Column('diet', sa.Integer(), nullable=True),
-    sa.Column('date', sa.DateTime(), nullable=True),
+    sa.Column('date', sa.DateTime(timezone=True), nullable=True),
     sa.Column('user_id', sa.Integer(), nullable=False),
     sa.ForeignKeyConstraint(['user_id'], ['user.user_id'], ),
     sa.PrimaryKeyConstraint('meal_plan_id')
