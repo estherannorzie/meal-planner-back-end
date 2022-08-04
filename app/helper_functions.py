@@ -22,16 +22,14 @@ def create_user_safely(cls, data_dict):
     if len(data_dict) != len(required_attributes):
         create_error_message("Username, first name, last name and email are required. Try again.")
     
-    verify_username_presence(cls, data_dict["username"])
-    verify_email_presence(cls, data_dict["email"])
-
     return cls.from_dict(data_dict)
 
 
 def create_user_meal_plan_safely(cls, data_dict, user):
     check_for_title_and_type(data_dict)
 
-    verify_meal_plan_presence(cls, data_dict["title"])
+    if "email" not in data_dict:
+        create_error_message("Email not in request. Try again.")
     
     is_subset(submitted_attributes=set(data_dict.keys()))
 
@@ -45,35 +43,6 @@ def update_user_meal_plan_safely(cls, data_dict, meal_plan):
 
     return cls.update_meal_plan(meal_plan, data_dict)
 
-# possible helper function for filtering db
-def filter_column(cls, column, record):
-    # return cls.query.filter_by(column=record).first()
-    pass
-
-
-def verify_username_presence(cls, username):
-    username_unavailable = cls.query.filter_by(username=username).first()
-    
-    if username_unavailable:
-        create_error_message("Username already in use. Try creating an account with a different username.")
-
-
-def verify_email_presence(cls, email):
-    email_unavailable = cls.query.filter_by(email=email).first()
-
-    if email_unavailable:
-        create_error_message("Email already in use. Try using a different email.")
-
-    if "@" not in email:
-        create_error_message("Invalid email entered. Please enter a valid email.")
-
-
-def verify_meal_plan_presence(cls, title):
-    meal_plan_present = cls.query.filter_by(title=title).first()
-
-    if meal_plan_present:
-        create_error_message("You have already added this meal plan.")
-
 
 def validate_email_update_request(data_dict):
     if len(data_dict) > 1:
@@ -84,7 +53,7 @@ def validate_email_update_request(data_dict):
 
 
 def is_subset(submitted_attributes):
-    possible_attributes = {"title", "type", "calories", "diet"}
+    possible_attributes = {"title", "type", "calories", "diet", "date"}
 
     if not submitted_attributes.issubset(possible_attributes):
         create_error_message("Incorrect attribute(s) submitted. Try again.")
