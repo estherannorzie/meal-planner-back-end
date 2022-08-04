@@ -38,7 +38,7 @@ def create_user_meal_plan_safely(cls, data_dict, user):
     
     is_subset(submitted_attributes=set(data_dict.keys()))
 
-    date_object = datetime.datetime.strptime(data_dict["date"], "%d %B, %Y")
+    date_object = datetime.datetime.strptime(data_dict["date"], "%Y-%m-%d")
 
     if date_object.date() < datetime.date.today():
         create_error_message("Meal plans cannot be created in the past.")
