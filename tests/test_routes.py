@@ -8,6 +8,21 @@ def test_get_all_users_with_no_records(client):
     assert response_body == []
 
 
+def test_create_one_user(client):
+     # Act
+    response = client.post("/users", json={
+        "username": "Tamara_Tromp36",
+        "first_name": "Elmore",
+        "last_name": "Shanahan",
+        "email": "Kadin69@gmail.com"
+    })
+    response_body = response.get_json()
+
+    # Assert
+    assert response.status_code == 201
+    assert response_body == "User Tamara_Tromp36 successfully created."
+
+
 def test_get_all_users_with_records(client, saved_users):
     # Act
     response = client.get("/users")
