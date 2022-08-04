@@ -1,4 +1,4 @@
-from flask import Blueprint, request, jsonify, make_response
+from flask import Blueprint, request
 from app import db
 from app.models.user import User
 from app.models.meal_plan import MealPlan
@@ -14,7 +14,7 @@ def create_user():
     db.session.add(user)
     db.session.commit()
     
-    return make_response(f"User {user.username} successfully created", 201)
+    return create_success_message(f"User {user.username} successfully created.", 201)
 
 
 @users_bp.route("/<user_id>", methods=("DELETE",))
@@ -24,7 +24,7 @@ def delete_user(user_id):
     db.session.delete(user)
     db.session.commit()
     
-    return make_response(f"User {user.username} with id of {user_id} successfully deleted")
+    return create_success_message(f"User {user.username} with id of {user_id} successfully deleted.")
 
 
 @users_bp.route("", methods=("GET",))
@@ -84,7 +84,7 @@ def delete_user_meal_plan(user_id, meal_plan_id):
     db.session.delete(meal_plan)
     db.session.commit()
     
-    return make_response(f"User {user.username}'s meal plan {meal_plan.title} successfully deleted.")
+    return create_success_message(f"User {user.username}'s meal plan {meal_plan.title} successfully deleted.")
 
 
 @users_bp.route("/<user_id>/meal_plans/<meal_plan_id>", methods=("PUT",))
@@ -97,4 +97,4 @@ def update_user_meal_plan(user_id, meal_plan_id):
     
     db.session.commit()
     
-    return make_response(f"User {user.username}'s meal plan updated to {meal_plan.title} successfully.")
+    return create_success_message(f"User {user.username}'s meal plan updated to {meal_plan.title} successfully.")
