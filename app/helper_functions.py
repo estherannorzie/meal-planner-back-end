@@ -23,13 +23,13 @@ def create_user_safely(cls, data_dict):
     if len(data_dict) != len(required_attributes):
         create_error_message("Username, first name, last name and email are required. Try again.")
 
-    verify_email_symbol(data_dict["email"])
+    verify_valid_email(data_dict["email"])
     
     return cls.from_dict(data_dict)
 
 
-def verify_email_symbol(email):
-    if "@" not in email:
+def verify_valid_email(email):
+    if email[0] == "@" or "@" not in email:
         create_error_message("The email submitted is not a valid email. Try again.")
 
 
@@ -49,7 +49,7 @@ def create_user_meal_plan_safely(cls, data_dict, user):
 def update_user_meal_plan_safely(cls, data_dict, meal_plan):
     verify_title_and_type(data_dict)
 
-    verify_email_symbol(data_dict["email"])
+    verify_valid_email(data_dict["email"])
 
     is_subset(submitted_attributes=set(data_dict.keys()))
 
@@ -62,6 +62,8 @@ def validate_email_update_request(data_dict):
 
     if "email" not in data_dict:
         create_error_message("Email not in request. Try again.")
+    
+    verify_valid_email(data_dict["email"])
 
 
 def is_subset(submitted_attributes):
