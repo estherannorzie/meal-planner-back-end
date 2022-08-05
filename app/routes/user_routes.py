@@ -24,7 +24,7 @@ def delete_user(user_id):
     db.session.delete(user)
     db.session.commit()
     
-    return create_success_message(f"User {user.username} with id of {user_id} successfully deleted.")
+    return create_success_message(f"User {user.username} successfully deleted.")
 
 
 @users_bp.route("", methods=("GET",))
