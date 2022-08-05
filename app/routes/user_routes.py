@@ -2,7 +2,8 @@ from flask import Blueprint, request
 from app import db
 from app.models.user import User
 from app.models.meal_plan import MealPlan
-from app.helper_functions import get_record_by_id, create_user_safely, create_user_meal_plan_safely, update_user_meal_plan_safely, validate_email_update_request, create_success_message
+from sqlalchemy import exc
+from app.helper_functions import get_record_by_id, create_user_safely, create_user_meal_plan_safely, update_user_meal_plan_safely, validate_email_update_request, create_success_message, create_error_message
 
 users_bp = Blueprint("users", __name__, url_prefix="/users")
 
@@ -58,10 +59,15 @@ def add_meal_plan_to_user(user_id):
     user = get_record_by_id(User, user_id)
 
     request_body = request.get_json()
+
     meal_plan = create_user_meal_plan_safely(MealPlan, request_body, user)
 
     db.session.add(meal_plan)
-    db.session.commit()
+    try:
+        db.session.commit()
+    except exc.IntegrityError:
+        db.session.rollback()
+        create_error_message("Duplicate meal plans are not allowed.")
 
     return create_success_message(f"{meal_plan.title} meal plan for user {user.username} successfully created.", 201)
 
