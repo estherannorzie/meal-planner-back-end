@@ -1,3 +1,5 @@
+import pytest
+
 def test_update_user_email(client, saved_users):
     response = client.patch("/users/1", json={
         "email": "Oliver_Roberts33@hotmail.com"
@@ -27,3 +29,7 @@ def test_update_user_email_is_valid(client, saved_users):
 
     assert response.status_code == 400
     assert response_body == "The email submitted is not a valid email. Try again."
+
+@pytest.mark.skip(reason="No way to test this feature yet")
+def test_update_user_email_aborts_if_email_in_use(client, saved_users):
+    pass

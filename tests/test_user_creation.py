@@ -1,3 +1,5 @@
+import pytest
+
 def test_create_one_user(client):
      # Act
     response = client.post("/users", json={
@@ -37,3 +39,20 @@ def test_user_creation_aborts_if_unneeded_properties_present(client):
 
     assert response.status_code == 400
     assert response_body == "Additional unneeded attributes submitted. Try again."
+
+@pytest.mark.skip(reason="No way to test this feature yet")
+def test_user_creation_aborts_if_username_in_use(client, saved_users):
+    response = client.post("/users", json={
+        "username": "nailspotato",
+        "first_name": "Garry",
+        "last_name": "Abernathy",
+        "email": "Garry_Abernathy52@yahoo.com",
+    })
+    response_body = response.get_json()
+
+    assert response.status_code == 400
+    assert response_body == None
+
+@pytest.mark.skip(reason="No way to test this feature yet")
+def test_user_creation_aborts_if_email_in_use(client, saved_users):
+    pass
