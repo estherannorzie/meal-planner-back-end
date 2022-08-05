@@ -5,11 +5,11 @@ def get_record_by_id(cls, id):
     try:
         id = int(id)
     except ValueError:
-        create_error_message(f"The {cls.stringify()} ID is not a valid ID.", 400)
+        create_error_message(f"{cls.stringify()} ID: {id} is not a valid ID.", 400)
     record = cls.query.get(id)
 
     if not record:
-        create_error_message(f"{cls.stringify()} does not exist.", 404)
+        create_error_message(f"{cls.stringify()} ID: {id} does not exist.", 404)
 
     return record 
 

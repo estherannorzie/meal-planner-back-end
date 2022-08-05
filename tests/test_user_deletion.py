@@ -11,7 +11,7 @@ def test_delete_nonexistent_user(client, saved_users):
     response_body = response.get_json()
 
     assert response.status_code == 404
-    assert response_body == "User does not exist."
+    assert response_body == "User ID: 1000 does not exist."
 
 
 def test_delete_invalid_user(client):
@@ -19,4 +19,4 @@ def test_delete_invalid_user(client):
     response_body = response.get_json()
 
     assert response.status_code == 400
-    assert response_body == "The User ID is not a valid ID."
+    assert response_body == "User ID: 1o is not a valid ID."
