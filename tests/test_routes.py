@@ -100,3 +100,27 @@ def test_update_user_email_is_valid(client, saved_users):
 
     assert response.status_code == 400
     assert response_body == "The email submitted is not a valid email. Try again."
+
+
+def test_delete_user(client, saved_users):
+    response = client.delete("/users/2")
+    response_body = response.get_json()
+
+    assert response.status_code == 200
+    assert response_body == "User fishalienpie successfully deleted."
+
+
+def test_delete_nonexistent_user(client, saved_users):
+    response = client.delete("/users/1000")
+    response_body = response.get_json()
+
+    assert response.status_code == 404
+    assert response_body == "User does not exist."
+
+
+def test_delete_invalid_user(client):
+    response = client.delete("/users/1o")
+    response_body = response.get_json()
+
+    assert response.status_code == 400
+    assert response_body == "The User ID is not a valid ID."
