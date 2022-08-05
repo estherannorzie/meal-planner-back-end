@@ -80,7 +80,7 @@ def verify_title_and_type(data_dict):
 
 
 def create_error_message(message, status_code=400):
-    abort(make_response(jsonify({"details": message}), status_code))
+    abort(make_response(jsonify(message), status_code))
 
 
 def create_success_message(message, status_code=200):
