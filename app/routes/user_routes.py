@@ -12,7 +12,7 @@ def create_user():
     user = create_user_safely(User, request_body)
 
     db.session.add(user)
-    attempt_db_commit()
+    attempt_db_commit("Username")
     
     return create_success_message(f"User {user.username} successfully created.", 201)
 
@@ -48,8 +48,7 @@ def update_user_email(user_id):
 
     validate_email_update_request(request_body, user)
     user.update_email(request_body)
-    attempt_db_commit()
-    # db.session.commit()
+    attempt_db_commit("Email")
 
     return create_success_message(f"User {user.username} email updated to {user.email}")
 
@@ -63,7 +62,7 @@ def add_meal_plan_to_user(user_id):
     meal_plan = create_user_meal_plan_safely(MealPlan, request_body, user)
 
     db.session.add(meal_plan)
-    attempt_db_commit()
+    attempt_db_commit("Meal plan")
 
     return create_success_message(f"{meal_plan.title} meal plan for user {user.username} successfully created.", 201)
 
@@ -97,6 +96,6 @@ def update_user_meal_plan(user_id, meal_plan_id):
     request_body = request.get_json()
     update_user_meal_plan_safely(MealPlan, request_body, meal_plan)
     
-    attempt_db_commit()
+    attempt_db_commit("Meal plan")
     
     return create_success_message(f"User {user.username}'s meal plan updated to {meal_plan.title} successfully.")
