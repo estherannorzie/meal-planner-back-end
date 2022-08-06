@@ -86,15 +86,15 @@ def verify_title_and_type(data_dict):
         create_error_message("Missing type.")
 
 
-def attempt_db_commit(attribute):
+def attempt_db_commit():
     try:
         db.session.commit()
     except exc.IntegrityError:
         db.session.rollback()
-        create_error_message(f"{attribute} is already in use. Try again.")
+        create_error_message(f"Already in use. Try again.")
     except exc.DataError:
         db.session.rollback()
-        create_error_message(f"{attribute} is too long. Try again.")
+        create_error_message(f"An attribute is too long. Try again.")
 
 
 def create_error_message(message, status_code=400):
