@@ -24,7 +24,7 @@ def test_creating_user_meal_plan_aborts_if_meal_plan_already_exists(client, save
     response_body = response.get_json()
 
     assert response.status_code == 400
-    assert response_body == "Duplicate meal plans are not allowed."
+    assert response_body == "Duplicates are not allowed."
 
 
 def test_user_cannot_create_past_meal_plans(client, saved_users):

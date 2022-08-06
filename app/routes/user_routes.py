@@ -2,8 +2,7 @@ from flask import Blueprint, request
 from app import db
 from app.models.user import User
 from app.models.meal_plan import MealPlan
-from sqlalchemy import exc
-from app.helper_functions import get_record_by_id, create_user_safely, create_user_meal_plan_safely, update_user_meal_plan_safely, validate_email_update_request, create_success_message, create_error_message
+from app.helper_functions import get_record_by_id, create_user_safely, create_user_meal_plan_safely, update_user_meal_plan_safely, validate_email_update_request, attempt_db_commit, create_success_message, create_error_message
 
 users_bp = Blueprint("users", __name__, url_prefix="/users")
 
@@ -13,7 +12,7 @@ def create_user():
     user = create_user_safely(User, request_body)
 
     db.session.add(user)
-    db.session.commit()
+    attempt_db_commit()
     
     return create_success_message(f"User {user.username} successfully created.", 201)
 
@@ -49,7 +48,8 @@ def update_user_email(user_id):
 
     validate_email_update_request(request_body, user)
     user.update_email(request_body)
-    db.session.commit()
+    attempt_db_commit()
+    # db.session.commit()
 
     return create_success_message(f"User {user.username} email updated to {user.email}")
 
@@ -63,11 +63,7 @@ def add_meal_plan_to_user(user_id):
     meal_plan = create_user_meal_plan_safely(MealPlan, request_body, user)
 
     db.session.add(meal_plan)
-    try:
-        db.session.commit()
-    except exc.IntegrityError:
-        db.session.rollback()
-        create_error_message("Duplicate meal plans are not allowed.")
+    attempt_db_commit()
 
     return create_success_message(f"{meal_plan.title} meal plan for user {user.username} successfully created.", 201)
 
@@ -101,6 +97,6 @@ def update_user_meal_plan(user_id, meal_plan_id):
     request_body = request.get_json()
     update_user_meal_plan_safely(MealPlan, request_body, meal_plan)
     
-    db.session.commit()
+    attempt_db_commit()
     
     return create_success_message(f"User {user.username}'s meal plan updated to {meal_plan.title} successfully.")

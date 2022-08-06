@@ -1,4 +1,6 @@
 from flask import jsonify, abort, make_response
+from app import db
+from sqlalchemy import exc
 import datetime
 
 def get_record_by_id(cls, id):
@@ -82,6 +84,17 @@ def verify_title_and_type(data_dict):
 
     if "type" not in data_dict:
         create_error_message("Missing type.")
+
+
+def attempt_db_commit():
+    try:
+        db.session.commit()
+    except exc.IntegrityError:
+        db.session.rollback()
+        create_error_message("Duplicates are not allowed.")
+    except exc.DataError:
+        db.session.rollback()
+        create_error_message("An attribute is too long.")
 
 
 def create_error_message(message, status_code=400):
