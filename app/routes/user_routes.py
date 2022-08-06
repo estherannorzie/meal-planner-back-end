@@ -2,7 +2,7 @@ from flask import Blueprint, request
 from app import db
 from app.models.user import User
 from app.models.meal_plan import MealPlan
-from app.helper_functions import get_record_by_id, create_user_safely, create_user_meal_plan_safely, update_user_meal_plan_safely, validate_email_update_request, attempt_db_commit, create_success_message, create_error_message
+from app.helper_functions import get_record_by_id, create_user_safely, create_user_meal_plan_safely, update_user_meal_plan_safely, validate_email_update_request, attempt_db_commit, create_success_message
 
 users_bp = Blueprint("users", __name__, url_prefix="/users")
 
