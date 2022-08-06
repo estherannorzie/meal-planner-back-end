@@ -1,4 +1,3 @@
-import pytest
 from datetime import date
 
 def test_update_user_meal_plan(client, saved_users_meal_plans):
