@@ -51,10 +51,8 @@ def create_user_meal_plan_safely(cls, data_dict, user):
 def update_user_meal_plan_safely(cls, data_dict, meal_plan):
     verify_title_and_type(data_dict)
 
-    verify_valid_email(data_dict["email"])
-
     is_subset(submitted_attributes=set(data_dict.keys()))
-
+    
     return cls.update_meal_plan(meal_plan, data_dict)
 
 
