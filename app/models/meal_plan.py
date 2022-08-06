@@ -1,3 +1,4 @@
+from time import timezone
 from app import db
 
 class MealPlan(db.Model):
@@ -6,7 +7,7 @@ class MealPlan(db.Model):
     type = db.Column(db.Integer, nullable=False)
     calories = db.Column(db.Integer)
     diet = db.Column(db.Integer)
-    date = db.Column(db.DateTime)
+    date = db.Column(db.DateTime(timezone=True))
     user_id = db.Column(db.Integer, db.ForeignKey("user.user_id"), nullable=False)
     user = db.relationship("User", back_populates="meal_plans")
 
