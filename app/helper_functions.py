@@ -40,10 +40,8 @@ def create_user_meal_plan_safely(cls, data_dict, user):
     
     is_subset(submitted_attributes=set(data_dict.keys()))
 
-    date_object = datetime.datetime.strptime(data_dict["date"], "%Y-%m-%d")
-
-    if date_object.date() < datetime.date.today():
-        create_error_message("Meal plans cannot be created in the past.")
+    if "date" in data_dict:
+        check_if_date_in_past(data_dict["date"])
 
     return cls.from_dict(data_dict, user)
 
@@ -53,7 +51,17 @@ def update_user_meal_plan_safely(cls, data_dict, meal_plan):
 
     is_subset(submitted_attributes=set(data_dict.keys()))
     
+    if "date" in data_dict:
+        check_if_date_in_past(data_dict["date"])
+
     return cls.update_meal_plan(meal_plan, data_dict)
+
+
+def check_if_date_in_past(date):
+    date_object = datetime.datetime.strptime(date, "%Y-%m-%d")
+
+    if date_object.date() < datetime.date.today():
+        create_error_message("Meal plans cannot be created or updated to the past.")
 
 
 def validate_email_update_request(data_dict, user):

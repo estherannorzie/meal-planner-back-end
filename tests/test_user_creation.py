@@ -1,7 +1,4 @@
-import pytest
-
 def test_create_one_user(client):
-     # Act
     response = client.post("/users", json={
         "username": "Tamara_Tromp36",
         "first_name": "Elmore",
@@ -10,7 +7,6 @@ def test_create_one_user(client):
     })
     response_body = response.get_json()
 
-    # Assert
     assert response.status_code == 201
     assert response_body == "User Tamara_Tromp36 successfully created."
 

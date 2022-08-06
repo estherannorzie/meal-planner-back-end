@@ -36,7 +36,7 @@ def test_user_cannot_create_past_meal_plans(client, saved_users):
     response_body = response.get_json()
 
     assert response.status_code == 400
-    assert response_body == "Meal plans cannot be created in the past."
+    assert response_body == "Meal plans cannot be created or updated to the past."
 
 
 def test_invalid_user_cannot_create_meal_plan(client, saved_users):
