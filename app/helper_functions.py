@@ -56,12 +56,15 @@ def update_user_meal_plan_safely(cls, data_dict, meal_plan):
     return cls.update_meal_plan(meal_plan, data_dict)
 
 
-def validate_email_update_request(data_dict):
+def validate_email_update_request(data_dict, user):
     if len(data_dict) > 1:
         create_error_message("Too many properties submitted. Try again.")
 
     if "email" not in data_dict:
         create_error_message("Email not in request. Try again.")
+
+    if data_dict["email"] == user.email:
+        create_error_message("Email already in use. Try a different email.")
     
     verify_valid_email(data_dict["email"])
 
