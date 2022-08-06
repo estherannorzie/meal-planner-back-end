@@ -47,7 +47,7 @@ def update_user_email(user_id):
     user = get_record_by_id(User, user_id)
     request_body = request.get_json()
 
-    validate_email_update_request(request_body)
+    validate_email_update_request(request_body, user)
     user.update_email(request_body)
     db.session.commit()
 
