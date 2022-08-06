@@ -1,9 +1,8 @@
 import pytest
-from app import create_app
-from app import db
-from app.models.user import User
+from app import create_app, db
 from app.models.meal_plan import MealPlan
-import datetime
+from app.models.user import User
+from datetime import date
 from flask.signals import request_finished
 
 
@@ -53,37 +52,40 @@ def saved_users(app):
 
     db.session.add_all([user_1, user_2, user_3])
     db.session.commit()
-    users = {
+
+    return {
         "user_1": user_1, 
         "user_2": user_2, 
         "user_3": user_3
     }
-    return users
 
 
 @pytest.fixture
 def saved_users_meal_plans(app, saved_users):
-    meal_plan_for_user_1 = MealPlan(
+    meal_plan_1 = MealPlan(
         title="Oscar Mayer Extra Cheesy Pizza Lunchables",
         type=4,
         calories=280,
-        date=datetime.date.today(),
+        date=date.today(),
         user=saved_users["user_1"]
     )
 
-    meal_plan_for_user_2 = MealPlan(
+    meal_plan_2 = MealPlan(
         title="Spaghetti & Meatballs with Tomato Sauce, small",
         type=3,
         calories=412,
-        date=datetime.date.today(),
+        date=date.today(),
         user=saved_users["user_2"]
     )
 
-    meal_plan_for_user_3 = MealPlan(
+    meal_plan_3 = MealPlan(
         title="Buttermilk Pancake, prepared from recipe",
         type=1,
         calories=86,
         diet=10,
-        date=datetime.date.today(),
+        date=date.today(),
         user=saved_users["user_3"]
     )
+
+    db.session.add_all([meal_plan_1, meal_plan_2, meal_plan_3])
+    db.session.commit()
