@@ -19,7 +19,7 @@ def test_updating_email_aborts_if_unneeded_key_submitted(client, saved_users):
     assert response_body == "Too many properties submitted. Try again."
 
 
-def test_update_user_email_is_valid(client, saved_users):
+def test_update_user_email_aborts_if_email_invalid(client, saved_users):
     response = client.patch("/users/1", json={
         "email": "@hotmail.com",
     })
@@ -37,3 +37,16 @@ def test_update_user_email_aborts_if_email_in_use(client, saved_users):
 
     assert response.status_code == 400
     assert response_body == "Email already in use. Try a different email."
+
+
+def test_user_creation_aborts_if_email_too_long(client):
+    response = client.post("/users", json={
+        "username": "MartianToxin409",
+        "first_name": "Aurelia",
+        "last_name": "James",
+        "email": "a_veryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryverylong_email@gmail.com",
+    })
+    response_body = response.get_json()
+
+    assert response.status_code == 400
+    assert response_body == "An attribute is too long. Try again."
