@@ -24,17 +24,12 @@ def create_app(test_config=None):
         app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get(
         "SQLALCHEMY_TEST_DATABASE_URI")
 
-    # Import models here for Alembic setup
-    # from app.models.ExampleModel import ExampleModel
     from app.models.meal_plan import MealPlan
     from app.models.user import User
 
     db.init_app(app)
     migrate.init_app(app, db)
 
-    # Register Blueprints here
-    from .routes.meal_plan_routes import meal_plans_bp
-    app.register_blueprint(meal_plans_bp)
     from .routes.user_routes import users_bp
     app.register_blueprint(users_bp)
 
