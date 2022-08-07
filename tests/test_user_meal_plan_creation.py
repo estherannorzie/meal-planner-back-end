@@ -1,11 +1,11 @@
-from datetime import date
+from datetime import datetime, date, timezone
 
 def test_create_one_user_meal_plan(client, saved_users):
     response = client.post("/users/1/meal_plans", json={
         "title": "Krispy Kreme Doughnuts Original Glazed Doughnut",
         "type": 4,
         "calories": 190,
-        "date": date.today().strftime("%Y-%m-%d")
+        "date": datetime.now(timezone.utc).strftime("%Y-%m-%d")
     })
     response_body = response.get_json()
 
@@ -18,7 +18,7 @@ def test_creating_user_meal_plan_aborts_if_meal_plan_already_exists(client, save
         "title": "Spaghetti & Meatballs with Tomato Sauce, small",
         "type": 3,
         "calories": 412,
-        "date": date.today().strftime("%Y-%m-%d")
+        "date": datetime.now(timezone.utc).strftime("%Y-%m-%d")
     })
     response_body = response.get_json()
 
@@ -44,7 +44,7 @@ def test_invalid_user_cannot_create_meal_plan(client, saved_users):
         "title": "Sandwich, Ham (4 oz), Cheese (4 oz), mayo, 3 oz Bread",
         "type": 2,
         "calories": 800,
-        "date": date.today().strftime("%Y-%m-%d")
+        "date": datetime.now(timezone.utc).strftime("%Y-%m-%d")
     })
     response_body = response.get_json()
 
@@ -57,7 +57,7 @@ def test_nonexistent_user_cannot_create_meal_plan(client, saved_users):
         "title": "Stuffed Zucchini",
         "type": 3,
         "calories": 570,
-        "date": date.today().strftime("%Y-%m-%d")
+        "date": datetime.now(timezone.utc).strftime("%Y-%m-%d")
     })
     response_body = response.get_json()
 
@@ -69,7 +69,7 @@ def test_abort_user_meal_plan_creation_title_not_present(client, saved_users):
     response = client.post("/users/2/meal_plans", json={
         "type": 2,
         "calories": 800,
-        "date": date.today().strftime("%Y-%m-%d")
+        "date": datetime.now(timezone.utc).strftime("%Y-%m-%d")
     })
     response_body = response.get_json()
 
@@ -81,7 +81,7 @@ def test_abort_user_meal_plan_creation_type_not_present(client, saved_users):
     response = client.post("/users/2/meal_plans", json={
         "title": "Sandwich, Ham (4 oz), Cheese (4 oz), mayo, 3 oz Bread",
         "calories": 800,
-        "date": date.today().strftime("%Y-%m-%d")
+        "date": datetime.now(timezone.utc).strftime("%Y-%m-%d")
     })
     response_body = response.get_json()
 
@@ -94,7 +94,7 @@ def test_abort_user_meal_plan_creation_title_too_long(client, saved_users):
         "title": "Stuffed Zucchini is Extremely Delicious, it will help me get my nutrition",
         "type": 3,
         "calories": 570,
-        "date": date.today().strftime("%Y-%m-%d")
+        "date": datetime.now(timezone.utc).strftime("%Y-%m-%d")
     })
     response_body = response.get_json()
 

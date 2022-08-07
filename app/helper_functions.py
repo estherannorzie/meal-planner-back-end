@@ -1,7 +1,7 @@
 from flask import jsonify, abort, make_response
 from app import db
 from sqlalchemy import exc
-import datetime
+from datetime import datetime, timezone, date
 
 def get_record_by_id(cls, id):
     try:
@@ -57,10 +57,10 @@ def update_user_meal_plan_safely(cls, data_dict, meal_plan):
     return cls.update_meal_plan(meal_plan, data_dict)
 
 
-def check_if_date_in_past(date):
-    date_object = datetime.datetime.strptime(date, "%Y-%m-%d")
+def check_if_date_in_past(str_date):
+    date_object = datetime.now(timezone.utc).strptime(str_date, "%Y-%m-%d")
 
-    if date_object.date() < datetime.date.today():
+    if date_object.date() < date.today():
         create_error_message("Meal plans cannot be created or updated to the past.")
 
 

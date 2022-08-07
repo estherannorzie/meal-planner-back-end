@@ -1,11 +1,11 @@
-from datetime import date
+from datetime import datetime, date, timezone
 
 def test_update_user_meal_plan(client, saved_users_meal_plans):
     response = client.put("/users/1/meal_plans/1", json={
         "title": "Easy Meatloaf",
         "type": 4,
         "calories": 372,
-        "date": date.today().strftime("%Y-%m-%d")
+        "date": datetime.now(timezone.utc).strftime("%Y-%m-%d")
     })
     response_body = response.get_json()
 
@@ -17,7 +17,7 @@ def test_user_cannot_update_meal_plan_without_title(client, saved_users_meal_pla
     response = client.put("/users/1/meal_plans/1", json={
         "type": 4,
         "calories": 372,
-        "date": date.today().strftime("%Y-%m-%d")
+        "date": datetime.now(timezone.utc).strftime("%Y-%m-%d")
     })
     response_body = response.get_json()
 
@@ -29,7 +29,7 @@ def test_user_cannot_update_meal_plan_without_type(client, saved_users_meal_plan
     response = client.put("/users/1/meal_plans/1", json={
         "title": "Easy Meatloaf",
         "calories": 372,
-        "date": date.today().strftime("%Y-%m-%d")
+        "date": datetime.now(timezone.utc).strftime("%Y-%m-%d")
     })
     response_body = response.get_json()
 
@@ -41,7 +41,7 @@ def test_user_meal_plan_update_aborts_if_unneeded_properties_present(client, sav
         "title": "Easy Meatloaf",
         "type": 4,
         "calories": 372,
-        "date": date.today().strftime("%Y-%m-%d"),
+        "date": datetime.now(timezone.utc).strftime("%Y-%m-%d"),
         "DOB": "1/1/2000"
     })
     response_body = response.get_json()
@@ -55,7 +55,7 @@ def test_invalid_user_cannot_update_meal_plan(client, saved_users_meal_plans):
         "title": "Easy Meatloaf",
         "type": 4,
         "calories": 372,
-        "date": date.today().strftime("%Y-%m-%d")
+        "date": datetime.now(timezone.utc).strftime("%Y-%m-%d")
     })
     response_body = response.get_json()
 
@@ -68,7 +68,7 @@ def test_nonexistent_user_cannot_update_meal_plan(client, saved_users_meal_plans
         "title": "Easy Meatloaf",
         "type": 4,
         "calories": 372,
-        "date": date.today().strftime("%Y-%m-%d")
+        "date": datetime.now(timezone.utc).strftime("%Y-%m-%d")
     })
     response_body = response.get_json()
 
@@ -81,7 +81,7 @@ def test_user_cannot_update_invalid_meal_plan(client, saved_users_meal_plans):
         "title": "Easy Meatloaf",
         "type": 4,
         "calories": 372,
-        "date": date.today().strftime("%Y-%m-%d")
+        "date": datetime.now(timezone.utc).strftime("%Y-%m-%d")
     })
     response_body = response.get_json()
 
@@ -94,7 +94,7 @@ def test_user_cannot_update_nonexistent_meal_plan(client, saved_users_meal_plans
         "title": "Easy Meatloaf",
         "type": 4,
         "calories": 372,
-        "date": date.today().strftime("%Y-%m-%d")
+        "date": datetime.now(timezone.utc).strftime("%Y-%m-%d")
     })
     response_body = response.get_json()
 
