@@ -1,4 +1,3 @@
-from time import timezone
 from app import db
 
 class MealPlan(db.Model):
@@ -45,3 +44,4 @@ class MealPlan(db.Model):
         self.type=data_dict["type"],
         self.calories=data_dict.get("calories"),
         self.diet=data_dict.get("diet"),
+        self.date=data_dict.get("date")
