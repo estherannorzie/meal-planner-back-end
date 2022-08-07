@@ -38,7 +38,7 @@ def verify_valid_email(email):
 def create_user_meal_plan_safely(cls, data_dict, user):
     verify_title_and_type(data_dict)
     
-    is_subset(submitted_attributes=set(data_dict.keys()))
+    confirm_proper_attributes_present(submitted_attributes=set(data_dict.keys()))
 
     if "date" in data_dict:
         check_if_date_in_past(data_dict["date"])
@@ -49,7 +49,7 @@ def create_user_meal_plan_safely(cls, data_dict, user):
 def update_user_meal_plan_safely(cls, data_dict, meal_plan):
     verify_title_and_type(data_dict)
 
-    is_subset(submitted_attributes=set(data_dict.keys()))
+    confirm_proper_attributes_present(submitted_attributes=set(data_dict.keys()))
     
     if "date" in data_dict:
         check_if_date_in_past(data_dict["date"])
@@ -77,7 +77,7 @@ def validate_email_update_request(data_dict, user):
     verify_valid_email(data_dict["email"])
 
 
-def is_subset(submitted_attributes):
+def confirm_proper_attributes_present(submitted_attributes):
     possible_attributes = {"title", "type", "calories", "diet", "date"}
 
     if not submitted_attributes.issubset(possible_attributes):
