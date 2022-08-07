@@ -36,6 +36,19 @@ def test_user_cannot_update_meal_plan_without_type(client, saved_users_meal_plan
     assert response.status_code == 400
     assert response_body == "Missing type."
 
+def test_user_meal_plan_update_aborts_if_unneeded_properties_present(client, saved_users_meal_plans):
+    response = client.put("/users/1/meal_plans/2", json={
+        "title": "Easy Meatloaf",
+        "type": 4,
+        "calories": 372,
+        "date": date.today().strftime("%Y-%m-%d"),
+        "DOB": "1/1/2000"
+    })
+    response_body = response.get_json()
+
+    assert response.status_code == 400
+    assert response_body == "Incorrect attribute(s) submitted. Try again."
+
 
 def test_invalid_user_cannot_update_meal_plan(client, saved_users_meal_plans):
     response = client.put("/users/1o/meal_plans/1", json={

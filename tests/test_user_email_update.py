@@ -8,7 +8,7 @@ def test_update_user_email(client, saved_users):
     assert response_body == "User eggpioneer10 email updated to Oliver_Roberts33@hotmail.com"
 
 
-def test_updating_email_aborts_if_unneeded_key_submitted(client, saved_users):
+def test_updating_email_aborts_if_unneeded_properties_present(client, saved_users):
     response = client.patch("/users/1", json={
         "email": "Oliver_Roberts33@hotmail.com",
         "food": "Is very tasty."
