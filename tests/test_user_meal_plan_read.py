@@ -33,3 +33,19 @@ def test_read_user_meal_plan(client, saved_users_meal_plans):
         "diet": 10,
     }
 ]
+
+
+def test_invalid_user_cannot_read_meal_plan(client, saved_users):
+    response = client.get("/users/1oo/meal_plans")
+    response_body = response.get_json()
+
+    assert response.status_code == 400
+    assert response_body == "User ID: 1oo is not a valid ID."
+
+
+def test_nonexistent_user_cannot_create_meal_plan(client, saved_users):
+    response = client.get("/users/4/meal_plans")
+    response_body = response.get_json()
+
+    assert response.status_code == 404
+    assert response_body == "User ID: 4 does not exist."
