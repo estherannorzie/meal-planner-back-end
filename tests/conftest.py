@@ -2,7 +2,7 @@ import pytest
 from app import create_app, db
 from app.models.meal_plan import MealPlan
 from app.models.user import User
-from datetime import datetime, timezone
+from datetime import datetime
 from flask.signals import request_finished
 
 
@@ -66,7 +66,7 @@ def saved_users_meal_plans(app, saved_users):
         title="Oscar Mayer Extra Cheesy Pizza Lunchables",
         type=4,
         calories=280,
-        date=datetime.now(timezone.utc),
+        date=datetime.now(),
         user=saved_users["user_1"]
     )
 
@@ -74,7 +74,7 @@ def saved_users_meal_plans(app, saved_users):
         title="Spaghetti & Meatballs with Tomato Sauce, small",
         type=3,
         calories=412,
-        date=datetime.now(timezone.utc),
+        date=datetime.now(),
         user=saved_users["user_2"]
     )
 
@@ -83,7 +83,7 @@ def saved_users_meal_plans(app, saved_users):
         type=1,
         calories=86,
         diet=10,
-        date=datetime.now(timezone.utc),
+        date=datetime.now(),
         user=saved_users["user_3"]
     )
 

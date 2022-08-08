@@ -1,8 +1,8 @@
 """Initial commit
 
-Revision ID: bbeedf86f910
+Revision ID: 236e7d64fb04
 Revises: 
-Create Date: 2022-08-06 19:17:16.470897
+Create Date: 2022-08-07 19:48:23.587225
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'bbeedf86f910'
+revision = '236e7d64fb04'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -34,7 +34,7 @@ def upgrade():
     sa.Column('type', sa.Integer(), nullable=False),
     sa.Column('calories', sa.Integer(), nullable=True),
     sa.Column('diet', sa.Integer(), nullable=True),
-    sa.Column('date', sa.DateTime(timezone=True), nullable=True),
+    sa.Column('date', sa.DateTime(), nullable=True),
     sa.Column('user_id', sa.Integer(), nullable=False),
     sa.ForeignKeyConstraint(['user_id'], ['user.user_id'], ),
     sa.PrimaryKeyConstraint('meal_plan_id'),
