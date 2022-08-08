@@ -58,7 +58,7 @@ def update_user_meal_plan_safely(cls, data_dict, meal_plan):
 
 
 def check_if_date_in_past(str_date):
-    date_object = datetime.now().strptime(str_date, "%m-%d-%Y")
+    date_object = datetime.now().strptime(str_date, "%a, %d %b %Y %H:%M:%S GMT")
 
     if date_object.date() < date.today():
         create_error_message("Meal plans cannot be created or updated to the past.")
