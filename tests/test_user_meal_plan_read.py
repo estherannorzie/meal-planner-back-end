@@ -11,7 +11,7 @@ def test_read_user_meal_plan(client, saved_users_meal_plans):
         "title": "Oscar Mayer Extra Cheesy Pizza Lunchables",
         "type": 4,
         "calories": 280,
-        "date": datetime.now().strftime("%m-%d-%Y"),
+        "date": datetime.now().strftime("%a, %d %b %Y %H:%M:%S GMT"),
         "diet": None,
     },
 
@@ -20,7 +20,7 @@ def test_read_user_meal_plan(client, saved_users_meal_plans):
         "title": "Spaghetti & Meatballs with Tomato Sauce, small",
         "type": 3,
         "calories": 412,
-        "date": datetime.now().strftime("%m-%d-%Y"),
+        "date": datetime.now().strftime("%a, %d %b %Y %H:%M:%S GMT"),
         "diet": None,
     },
 
@@ -29,7 +29,7 @@ def test_read_user_meal_plan(client, saved_users_meal_plans):
         "title": "Buttermilk Pancake, prepared from recipe",
         "type": 1,
         "calories": 86,
-        "date": datetime.now().strftime("%m-%d-%Y"),
+        "date": datetime.now().strftime("%a, %d %b %Y %H:%M:%S GMT"),
         "diet": 10,
     }
 ]
