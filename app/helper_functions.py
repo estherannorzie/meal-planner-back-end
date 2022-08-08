@@ -58,10 +58,10 @@ def update_user_meal_plan_safely(cls, data_dict, meal_plan):
 
 
 def check_if_date_in_past(str_date):
-    date_object = datetime.now(timezone.utc).strptime(str_date, "%Y-%m-%d")
+    date_object = datetime.now(timezone.utc).strptime(str_date, "%a, %d %b %Y %X GMT")
 
     if date_object.date() < date.today():
-        create_error_message("Meal plans cannot be created or updated to the past.")
+        create_error_message("Meal plans cannot be created or updated to a past date.")
 
 
 def validate_email_update_request(data_dict, user):
