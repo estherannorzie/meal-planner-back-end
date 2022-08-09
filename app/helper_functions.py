@@ -17,7 +17,7 @@ def get_record_by_id(cls, id):
 
 
 def create_user_safely(cls, data_dict):
-    required_attributes = {"username", "first_name", "last_name", "email"}
+    required_attributes = {"username", "password", "first_name", "last_name", "email"}
 
     if len(data_dict) > len(required_attributes):
         create_error_message("Additional unneeded attributes submitted. Try again.")
@@ -97,10 +97,10 @@ def attempt_db_commit():
         db.session.commit()
     except exc.IntegrityError:
         db.session.rollback()
-        create_error_message(f"Already in use. Try again.")
+        create_error_message("An integrity error occurred.")
     except exc.DataError:
         db.session.rollback()
-        create_error_message(f"An attribute is too long. Try again.")
+        create_error_message("A data error occurred.")
 
 
 def create_error_message(message, status_code=400):
