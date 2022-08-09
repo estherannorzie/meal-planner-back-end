@@ -23,7 +23,7 @@ def test_creating_user_meal_plan_aborts_if_meal_plan_already_exists(client, save
     response_body = response.get_json()
 
     assert response.status_code == 400
-    assert response_body == "Already in use. Try again."
+    assert response_body == "An integrity error occurred."
 
 
 def test_user_cannot_create_past_meal_plans(client, saved_users):
@@ -99,4 +99,4 @@ def test_abort_user_meal_plan_creation_title_too_long(client, saved_users):
     response_body = response.get_json()
 
     assert response.status_code == 400
-    assert response_body == "An attribute is too long. Try again."
+    assert response_body == "A data error occurred."
