@@ -38,7 +38,10 @@ def verify_valid_email(email):
 def create_user_meal_plan_safely(cls, data_dict, user):
     verify_title_and_type(data_dict)
     
-    confirm_proper_attributes_present(submitted_attributes=set(data_dict.keys()))
+    confirm_proper_attributes_present(
+        possible_attributes={"title", "type", "calories", "diet", "date"},
+        submitted_attributes=set(data_dict.keys())
+    )
 
     if "date" in data_dict:
         check_if_date_in_past(data_dict["date"])
@@ -49,7 +52,10 @@ def create_user_meal_plan_safely(cls, data_dict, user):
 def update_user_meal_plan_safely(cls, data_dict, meal_plan):
     verify_title_and_type(data_dict)
 
-    confirm_proper_attributes_present(submitted_attributes=set(data_dict.keys()))
+    confirm_proper_attributes_present(
+        possible_attributes={"title", "type", "calories", "diet", "date"},
+        submitted_attributes=set(data_dict.keys())
+    )
     
     if "date" in data_dict:
         check_if_date_in_past(data_dict["date"])
@@ -64,22 +70,23 @@ def check_if_date_in_past(str_date):
         create_error_message("Meal plans cannot be created or updated to a past date.")
 
 
-def validate_email_update_request(data_dict, user):
-    if len(data_dict) > 1:
-        create_error_message("Too many properties submitted. Try again.")
+def validate_update_user_request(data_dict, user):
+    confirm_proper_attributes_present(
+        possible_attributes={"password", "email"},
+        submitted_attributes=set(data_dict.keys())
+    )
 
-    if "email" not in data_dict:
-        create_error_message("Email not in request. Try again.")
-
-    if data_dict["email"] == user.email:
-        create_error_message("Email already in use. Try a different email.")
-    
-    verify_valid_email(data_dict["email"])
+    if "email" in data_dict:
+        if data_dict["email"] == user.email:
+            create_error_message("Email already in use. Try a different email.")
+        verify_valid_email(data_dict["email"])
 
 
-def confirm_proper_attributes_present(submitted_attributes):
-    possible_attributes = {"title", "type", "calories", "diet", "date"}
+def validate_password_change(data_dict, user):
+    pass
 
+
+def confirm_proper_attributes_present(possible_attributes, submitted_attributes):
     if not submitted_attributes.issubset(possible_attributes):
         create_error_message("Incorrect attribute(s) submitted. Try again.")
 

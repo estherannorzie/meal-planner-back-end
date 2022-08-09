@@ -48,5 +48,6 @@ class User(db.Model):
             email=data_dict["email"]
         )
     
-    def update_email(self, data_dict):
-        self.email = data_dict["email"]
+    def update_user(self, data_dict, user_current_email, user_current_password):
+        self.email=data_dict["email"] if data_dict.get("email") else user_current_email,
+        self.password=data_dict["password"] if data_dict.get("password") else user_current_password
