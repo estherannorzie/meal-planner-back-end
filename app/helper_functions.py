@@ -23,7 +23,7 @@ def create_user_safely(cls, data_dict):
         create_error_message("Additional unneeded attributes submitted. Try again.")
 
     if len(data_dict) != len(required_attributes):
-        create_error_message("Username, first name, last name and email are required. Try again.")
+        create_error_message("Username, first name, last name, password, and email are required. Try again.")
 
     verify_valid_email(data_dict["email"])
     

@@ -31,6 +31,7 @@ def client(app):
 def saved_users(app):
     user_1 = User(
         username="eggpioneer10", 
+        password="p7IuVjbrpwrb0p5",
         first_name="Vance", 
         last_name="Lehner", 
         email="Vance.Lehner90@gmail.com"
@@ -38,6 +39,7 @@ def saved_users(app):
 
     user_2 = User(
         username="fishalienpie", 
+        password="N3e8Ia6s677^",
         first_name="Lora", 
         last_name="Kassulke", 
         email="Lora.Kassulke75@yahoo.com"
@@ -45,6 +47,7 @@ def saved_users(app):
 
     user_3 = User(
         username="nailspotato", 
+        password="^2OxH4H0la!h",
         first_name="Katelin", 
         last_name="Gulgowski", 
         email="Katelin_Gulgowski94@hotmail.com"
