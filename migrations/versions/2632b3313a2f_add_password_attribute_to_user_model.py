@@ -1,8 +1,8 @@
-"""Initial commit
+"""Add password attribute to user model
 
-Revision ID: bbeedf86f910
+Revision ID: 2632b3313a2f
 Revises: 
-Create Date: 2022-08-06 19:17:16.470897
+Create Date: 2022-08-09 14:54:30.731587
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'bbeedf86f910'
+revision = '2632b3313a2f'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -21,9 +21,11 @@ def upgrade():
     op.create_table('user',
     sa.Column('user_id', sa.Integer(), autoincrement=True, nullable=False),
     sa.Column('username', sa.String(length=16), nullable=False),
+    sa.Column('password', sa.String(), nullable=False),
     sa.Column('first_name', sa.String(length=16), nullable=False),
     sa.Column('last_name', sa.String(length=16), nullable=False),
     sa.Column('email', sa.String(length=255), nullable=False),
+    sa.CheckConstraint('char_length(password) > 11', name='password_min_length'),
     sa.PrimaryKeyConstraint('user_id'),
     sa.UniqueConstraint('email'),
     sa.UniqueConstraint('username')
