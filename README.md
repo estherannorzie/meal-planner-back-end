@@ -1,6 +1,6 @@
 # Meal Planner iOS: Back-end
 
-Meal Planner iOS is a capstone project created during Ada Developers Academy, Cohort 17. Users can create a meal plan for on the current day or in the future.
+Meal Planner iOS is a capstone project created during Ada Developers Academy, Cohort 17. Users can create a meal plan for the current day or in the future.
 
 ## Features
 - Create an account
