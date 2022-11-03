@@ -4,15 +4,15 @@ Meal Planner iOS is a capstone project created during Ada Developers Academy, co
 
 ## Features
 - Create an account
-- Delete your account
-- Update account
+- Delete an account
+- Update account password or email address
 - Create a meal plan
 - Delete a meal plan
 - Update a meal plan
-- View meal plans
+- View all meal plans
 
 ## API Design
-![Entity relationship diagram](assets/meal-planner-diagram-back-end-erd.png)
+![Entity relationship diagram](/assets/meal-planner-diagram-back-end-erd.png)
 
 ## Technologies
 - Python3
