@@ -16,14 +16,15 @@ Meal Planner iOS is a capstone project created during Ada Developers Academy, co
 
 ## Technologies
 - Python3
+- Pytest
 - Flask
 - SQLAlchemy
 - PostgreSQL
 
-## Prerequisites
+## Requirements
 - [Python3](https://www.python.org/downloads/)
 - [PostgreSQL](https://www.postgresql.org/download/)
-- An API Testing client such as [Postman](https://www.postman.com/downloads/)
+- An API platform such as [Postman](https://www.postman.com/downloads/)
 
 
 ## Usage
