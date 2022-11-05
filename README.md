@@ -13,6 +13,7 @@ Meal Planner iOS is a capstone project created during Ada Developers Academy, co
 
 ## API Design
 ![Entity relationship diagram](/assets/meal-planner-diagram-back-end-erd.png)
+![Endpoint chart](assets/meal-planner-diagram-endpoints.png)
 
 ## Technologies
 - Python3
