@@ -32,7 +32,6 @@
   </details>
 </p>
 
-
 ## Description
 Meal Planner iOS is a capstone project created during Ada Developers Academy, cohort 17. Users can create a meal plan for the current day or for a future day. Development has come to a halt.
 
@@ -46,15 +45,13 @@ Meal Planner iOS is a capstone project created during Ada Developers Academy, co
 - View all meal plans
 
 ## API Design
-![Entity relationship diagram](/assets/meal-planner-diagram-back-end-erd.png)
-![Endpoint chart](assets/meal-planner-diagram-endpoints.png)
-
-## Technologies
-- Python3
-- Pytest
-- Flask
-- SQLAlchemy
-- PostgreSQL
+<details>
+  <summary>Images</summary>
+  <img src="./assets/meal-planner-diagram-back-end-erd.png" alt="Entity relationship diagram" />
+  <br>
+  <img src="./assets/meal-planner-diagram-endpoints.png" alt="Endpoint chart" />
+</details>
+<br>
 
 ## Requirements
 - [Python3](https://www.python.org/downloads/)
