@@ -55,6 +55,7 @@ Meal Planner iOS is a capstone project created during Ada Developers Academy, co
 ## Example Usage
 
 ### Creating an account
+
 #### Request
 ```json
 {
@@ -66,6 +67,20 @@ Meal Planner iOS is a capstone project created during Ada Developers Academy, co
 }
 ```
 
-
-### Response
+#### Response
 `"User janeydoe53 successfully created."`
+
+### Creating an meal plan
+
+#### Request
+```json
+{
+  "title": "Krispy Kreme Doughnuts Original Glazed Doughnut",
+  "type": 4,
+  "calories": 190,
+  "date": "Wed, 15 Mar 2023"
+}
+```
+
+#### Response
+`"Krispy Kreme Doughnuts Original Glazed Doughnut meal plan for user eggpioneer10 successfully created."`
