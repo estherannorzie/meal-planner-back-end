@@ -1,5 +1,39 @@
 # Meal Planner iOS: Back-End
+<p>
+  <img alt="Python3" src="https://img.shields.io/badge/-Python3-orange"/>
+  <img alt="Python3" src="https://img.shields.io/badge/-Pytest-blue"/>
+  <img alt="Python3" src="https://img.shields.io/badge/-Flask-red"/>
+  <img alt="Python3" src="https://img.shields.io/badge/-SqlAlchemy-green"/>
+  <img alt="Python3" src="https://img.shields.io/badge/-PostgreSQL-purple"/>
+</p>
 
+<p>
+  <details>
+    <summary>Table of Contents</summary>
+    <ol>
+      <li>
+        <a href="#description">Description</a>
+        <ul>
+          <li>
+            <a href="#features">Features</a>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <a href="#usage">Usage</a>
+      </li>
+      <li>
+        <a href="#api-design">API Design</a>
+      </li>
+      <li>
+        <a href="#example-usage">Example Usage</a>
+      </li>
+    </ol>
+  </details>
+</p>
+
+
+## Description
 Meal Planner iOS is a capstone project created during Ada Developers Academy, cohort 17. Users can create a meal plan for the current day or for a future day. Development has come to a halt.
 
 ## Features
