@@ -109,8 +109,9 @@ Meal Planner iOS is a capstone project created during Ada Developers Academy, co
 
 #### Response
 `"User janeydoe53 successfully created."`
+<hr>
 
-### Creating an meal plan
+### Creating a meal plan
 
 #### Request
 ```json
