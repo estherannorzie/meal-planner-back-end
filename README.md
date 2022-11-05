@@ -1,10 +1,20 @@
 # Meal Planner iOS: Back-End
 <p>
-  <img alt="Python3" src="https://img.shields.io/badge/-Python3-orange"/>
-  <img alt="Python3" src="https://img.shields.io/badge/-Pytest-blue"/>
-  <img alt="Python3" src="https://img.shields.io/badge/-Flask-red"/>
-  <img alt="Python3" src="https://img.shields.io/badge/-SqlAlchemy-green"/>
-  <img alt="Python3" src="https://img.shields.io/badge/-PostgreSQL-purple"/>
+  <a href="https://www.python.org/">
+    <img alt="Python3 badge" src="https://img.shields.io/badge/-Python3-purple"/>
+  </a>
+  <a href="https://pytest.org">
+    <img alt="Pytest badge" src="https://img.shields.io/badge/-Pytest-blue"/>
+  </a>
+  <a href="https://flask.palletsprojects.com">
+    <img alt="Flask badge" src="https://img.shields.io/badge/-Flask-red"/>
+  </a>
+  <a href="https://www.sqlalchemy.org">
+    <img alt="SQLAlchemy badge" src="https://img.shields.io/badge/-SQLAlchemy-green"/>
+ </a>
+  <a href="https://www.postgresql.org">
+    <img alt="PostgreSQL badge" src="https://img.shields.io/badge/-PostgreSQL-pink"/>
+ </a>
 </p>
 
 <p>
