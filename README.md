@@ -1,4 +1,4 @@
-# Meal Planner iOS: Back-End
+# Meal Planner: Back-End
 <p>
   <a href="https://www.python.org/">
     <img alt="Python3 badge" src="https://img.shields.io/badge/-Python3-purple"/>
