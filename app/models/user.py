@@ -11,10 +11,9 @@ class User(db.Model):
     email = db.Column(db.String(255), nullable=False, unique=True)
     meal_plans = db.relationship("MealPlan", back_populates="user")
 
-    # https://stackoverflow.com/questions/50174325/define-minimum-length-for-postgresql-string-column-with-sqlalchemy
     __table_args__ = (
-        CheckConstraint("char_length(password) > 11",
-                        name="password_min_length"),
+        CheckConstraint("char_length(password) > 11", 
+        name="password_min_length"),
     )
 
     @validates(password)
